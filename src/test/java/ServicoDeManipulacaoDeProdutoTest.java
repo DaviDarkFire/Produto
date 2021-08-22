@@ -8,20 +8,20 @@ public class ServicoDeManipulacaoDeProdutoTest {
     private QualquerCoisa qualquerCoisa;
     private ProdutoRepository produtoRepository;
     private Produto produto;
-    private AutorizacaoStubSpy autorizacaoStubSpy;
+    private Autorizacao autorizacaoStubSpy;
 
     @Before
     public void setUp() {
         qualquerCoisa = Mockito.mock(QualquerCoisa.class); //dummie
         produtoRepository = Mockito.mock(ProdutoRepository.class);
         produto = new Produto("Monange", 10.0, "Creme hidratante", qualquerCoisa);
-        autorizacaoStubSpy = new AutorizacaoStubSpy(); //Stub
+        autorizacaoStubSpy = new AutorizacaoStubSpy(); //Stub/Spy
     }
 
     @Test
     public void deveAdicionarProduto() {
         String mensagemEsperada = "Produto adicionado com sucesso!";
-        Mockito.when(produtoRepository.adicionarProduto(produto)).thenReturn(mensagemEsperada); //Mock
+        Mockito.when(produtoRepository.adicionarProduto(produto)).thenReturn(mensagemEsperada); //não é Mock, é stub. Saber pq disso, criar impl com mock
         ServicoDeManipulacaoDeProduto servico = new ServicoDeManipulacaoDeProduto(produtoRepository);
 
         String resposta = servico.cadastrarProduto(produto);
@@ -49,4 +49,6 @@ public class ServicoDeManipulacaoDeProdutoTest {
 
         Assertions.assertThat(resposta).isTrue();
     }
+
+    //TODO: fazer teste com stub falso, spy
 }

@@ -14,7 +14,7 @@ public class ServicoDeManipulacaoDeProduto {
         return produtoRepository.atualizarProduto(produto);
     }
 
-    public boolean deletarProduto(AutorizacaoStubSpy autorizacaoStubSpy, Produto produto) {
+    public boolean deletarProduto(Autorizacao autorizacaoStubSpy, Produto produto) {
         return autorizacaoStubSpy.autorizarExclusao(produto) && produtoRepository.removerProduto(produto);
     }
 }
