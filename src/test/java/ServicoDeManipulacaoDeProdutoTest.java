@@ -8,23 +8,23 @@ public class ServicoDeManipulacaoDeProdutoTest {
     private QualquerCoisa qualquerCoisa;
     private ProdutoRepository produtoRepository;
     private Produto produto;
-    private Autorizacao autorizacaoStubSpy;
+    private Estoque estoque;
 
     @Before
     public void setUp() {
         qualquerCoisa = Mockito.mock(QualquerCoisa.class); //dummie
         produtoRepository = Mockito.mock(ProdutoRepository.class);
         produto = new Produto("Monange", 10.0, "Creme hidratante", qualquerCoisa);
-        autorizacaoStubSpy = new AutorizacaoStubSpy(); //Stub/Spy
+        estoque = new EstoqueSpy(0);
     }
 
     @Test
     public void deveAdicionarProduto() {
         String mensagemEsperada = "Produto adicionado com sucesso!";
-        Mockito.when(produtoRepository.adicionarProduto(produto)).thenReturn(mensagemEsperada); //não é Mock, é stub. Saber pq disso, criar impl com mock
+        Mockito.when(produtoRepository.adicionarProduto(produto)).thenReturn(mensagemEsperada); //stub
         ServicoDeManipulacaoDeProduto servico = new ServicoDeManipulacaoDeProduto(produtoRepository);
 
-        String resposta = servico.cadastrarProduto(produto);
+        String resposta = servico.cadastrarProduto(estoque, produto);
 
         Assertions.assertThat(resposta).isEqualTo(mensagemEsperada);
     }
@@ -45,10 +45,34 @@ public class ServicoDeManipulacaoDeProdutoTest {
         Mockito.when(produtoRepository.removerProduto(produto)).thenReturn(true);
         ServicoDeManipulacaoDeProduto servico = new ServicoDeManipulacaoDeProduto(produtoRepository);
 
-        boolean resposta = servico.deletarProduto(autorizacaoStubSpy, produto);
+        boolean resposta = servico.deletarProduto(estoque, produto);
 
         Assertions.assertThat(resposta).isTrue();
     }
 
-    //TODO: fazer teste com stub falso, spy
+    @Test
+    public void deveSomarNoEstoqueAoCadastrarProdutoNovo() {
+        estoque = new EstoqueSpy(0);
+        Integer quantidadeDeProdutosDoEstoqueAposCadastro = 1;
+
+        Mockito.when(produtoRepository.adicionarProduto(produto)).thenReturn("mensagem qualquer");
+        ServicoDeManipulacaoDeProduto servico = new ServicoDeManipulacaoDeProduto(produtoRepository);
+
+        servico.cadastrarProduto(estoque, produto);
+
+        Assertions.assertThat(estoque.getQuantidadeDeProdutosEmEstoque()).isEqualTo(quantidadeDeProdutosDoEstoqueAposCadastro);
+    }
+
+    @Test
+    public void deveSubtrairDoEstoqueAoExcluirProduto() {
+        estoque = new EstoqueSpy(5);
+        Integer quantidadeDeProdutosDoEstoqueAposCadastro = 4;
+
+        Mockito.when(produtoRepository.removerProduto(produto)).thenReturn(true);
+        ServicoDeManipulacaoDeProduto servico = new ServicoDeManipulacaoDeProduto(produtoRepository);
+
+        servico.deletarProduto(estoque, produto);
+
+        Assertions.assertThat(estoque.getQuantidadeDeProdutosEmEstoque()).isEqualTo(quantidadeDeProdutosDoEstoqueAposCadastro);
+    }
 }

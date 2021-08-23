@@ -6,7 +6,8 @@ public class ServicoDeManipulacaoDeProduto {
         this.produtoRepository = produtoRepository;
     }
 
-    public String cadastrarProduto(Produto produto) {
+    public String cadastrarProduto(Estoque estoque, Produto produto) {
+        estoque.adicionaProdutoEmEstoque(produto);
         return produtoRepository.adicionarProduto(produto);
     }
 
@@ -14,7 +15,8 @@ public class ServicoDeManipulacaoDeProduto {
         return produtoRepository.atualizarProduto(produto);
     }
 
-    public boolean deletarProduto(Autorizacao autorizacaoStubSpy, Produto produto) {
-        return autorizacaoStubSpy.autorizarExclusao(produto) && produtoRepository.removerProduto(produto);
+    public boolean deletarProduto(Estoque estoque ,Produto produto) {
+        estoque.daBaixaDeProdutoEmEstoque(produto);
+        return produtoRepository.removerProduto(produto);
     }
 }
