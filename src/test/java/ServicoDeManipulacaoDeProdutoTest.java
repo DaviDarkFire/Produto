@@ -75,4 +75,46 @@ public class ServicoDeManipulacaoDeProdutoTest {
 
         Assertions.assertThat(estoque.getQuantidadeDeProdutosEmEstoque()).isEqualTo(quantidadeDeProdutosDoEstoqueAposCadastro);
     }
+
+    @Test
+    public void deveFazer2AdicoesDeProdutoEmEstoque() {
+        estoque = new EstoqueSpy(0);
+        Integer quantidadeDeAdicoesDeProdutoEmEstoque = 2;
+
+        Mockito.when(produtoRepository.adicionarProduto(produto)).thenReturn("mensagem qualquer");
+        ServicoDeManipulacaoDeProduto servico = new ServicoDeManipulacaoDeProduto(produtoRepository);
+
+        servico.cadastrarProduto(estoque, produto);
+        servico.cadastrarProduto(estoque, produto);
+
+        Assertions.assertThat(estoque.quantasVezesHouveAdicaoDeProduto).isEqualTo(quantidadeDeAdicoesDeProdutoEmEstoque);
+
+
+    }
+
+    @Test
+    public void deveFazer2ExclusoesDeProdutoEmEstoque() {
+        estoque = new EstoqueSpy(3);
+        Integer quantidadeDeExclusoesDeProdutoEmEstoque = 2;
+
+        Mockito.when(produtoRepository.adicionarProduto(produto)).thenReturn("mensagem qualquer");
+        ServicoDeManipulacaoDeProduto servico = new ServicoDeManipulacaoDeProduto(produtoRepository);
+
+        servico.deletarProduto(estoque, produto);
+        servico.deletarProduto(estoque, produto);
+
+        Assertions.assertThat(estoque.quantasVezesHouveExclusaoDeProduto).isEqualTo(quantidadeDeExclusoesDeProdutoEmEstoque);
+    }
+
+    @Test
+    public void deveConterProdutoEspecificadoComoUltimoProdutoManuseadoAposExclusao() {
+        estoque = new EstoqueSpy(3);
+
+        Mockito.when(produtoRepository.adicionarProduto(produto)).thenReturn("mensagem qualquer");
+        ServicoDeManipulacaoDeProduto servico = new ServicoDeManipulacaoDeProduto(produtoRepository);
+
+        servico.deletarProduto(estoque, produto);
+
+        Assertions.assertThat(estoque.ultimoProdutoManuseado).isEqualTo(produto);
+    }
 }
