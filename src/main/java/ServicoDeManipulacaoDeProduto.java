@@ -10,6 +10,10 @@ public class ServicoDeManipulacaoDeProduto {
         estoque.adicionaProdutoEmEstoque(produto);
         return produtoRepository.adicionarProduto(produto);
     }
+    public String cadastrarProduto(EstoqueMock estoque, Produto produto) throws Exception {
+            estoque.adicionaProdutoEmEstoque(produto);
+            return produtoRepository.adicionarProduto(produto);
+        }
 
     public String atualizarProduto(Produto produto) {
         return produtoRepository.atualizarProduto(produto);
@@ -19,4 +23,11 @@ public class ServicoDeManipulacaoDeProduto {
         estoque.daBaixaDeProdutoEmEstoque(produto);
         return produtoRepository.removerProduto(produto);
     }
+
+    public boolean deletarProduto(EstoqueMock estoque ,Produto produto) throws Exception {
+        estoque.daBaixaDeProdutoEmEstoque(produto);
+        return produtoRepository.removerProduto(produto);
+    }
+
+
 }

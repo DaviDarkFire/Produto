@@ -29,16 +29,4 @@ public class EstoqueSpy implements Estoque{ //adicionar atributos que espionem o
         quantasVezesHouveAdicaoDeProduto++;
         quantidadeDeProdutos++;
     }
-
-    public Integer quantasVezesHouveExclusaoDeProduto(){
-        return quantasVezesHouveExclusaoDeProduto;
-    }
-
-    public Produto ultimoProdutoManuseado(){
-        return ultimoProdutoManuseado;
-    }
-
-    public Integer quantasVezesHouveAdicaoDeProduto(){
-        return quantasVezesHouveAdicaoDeProduto;
-    }
 }
