@@ -34,7 +34,7 @@ public class EstoqueMock implements EstoqueForMock{
 
     private void lancaExcecaoCasoQuantidadeDeExclusoesMaiorQueCinco() throws Exception {
         if(quantasVezesHouveExclusaoDeProduto > 5) {
-            throw new Exception("Cuidado! Mais que 5 exclusões.");
+            throw new IllegalArgumentException("Cuidado! Mais que 5 exclusões.");
         }
     }
 
