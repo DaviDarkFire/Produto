@@ -1,5 +1,5 @@
 public interface Estoque {
     int getQuantidadeDeProdutosEmEstoque();
-    void daBaixaDeProdutoEmEstoque(Produto produto);
-    void adicionaProdutoEmEstoque(Produto produto);
+    void daBaixaDeProdutoEmEstoque(Produto produto) throws RuntimeException;
+    void adicionaProdutoEmEstoque(Produto produto) throws RuntimeException;
 }

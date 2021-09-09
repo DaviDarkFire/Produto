@@ -1,5 +1,4 @@
-public class EstoqueSpy implements Estoque{ //adicionar atributos que espionem o que foi feito
-    //com o mock adicionar exceções caso os atributos espiões não estejam de acordo com o que eu definir
+public class EstoqueSpy implements Estoque{
     private Integer quantidadeDeProdutos;
     public Integer quantasVezesHouveExclusaoDeProduto;
     public Produto ultimoProdutoManuseado;

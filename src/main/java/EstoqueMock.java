@@ -1,4 +1,4 @@
-public class EstoqueMock implements EstoqueForMock{
+public class EstoqueMock implements Estoque{
 
     private Integer quantidadeDeProdutos;
     public Integer quantasVezesHouveExclusaoDeProduto;
@@ -17,7 +17,7 @@ public class EstoqueMock implements EstoqueForMock{
     }
 
     @Override
-    public void daBaixaDeProdutoEmEstoque(Produto produto) throws Exception{
+    public void daBaixaDeProdutoEmEstoque(Produto produto) throws RuntimeException{
         ultimoProdutoManuseado = produto;
         quantasVezesHouveExclusaoDeProduto++;
         lancaExcecaoCasoQuantidadeDeExclusoesMaiorQueCinco();
@@ -25,22 +25,22 @@ public class EstoqueMock implements EstoqueForMock{
     }
 
     @Override
-    public void adicionaProdutoEmEstoque(Produto produto) throws Exception {
+    public void adicionaProdutoEmEstoque(Produto produto) throws RuntimeException {
         ultimoProdutoManuseado = produto;
         quantasVezesHouveAdicaoDeProduto++;
         lancaExcecaoCasoQuantidadeDeAdicoesMaiorQueCinco();
         quantidadeDeProdutos++;
     }
 
-    private void lancaExcecaoCasoQuantidadeDeExclusoesMaiorQueCinco() throws Exception {
+    private void lancaExcecaoCasoQuantidadeDeExclusoesMaiorQueCinco() throws RuntimeException {
         if(quantasVezesHouveExclusaoDeProduto > 5) {
             throw new IllegalArgumentException("Cuidado! Mais que 5 exclusões.");
         }
     }
 
-    private void lancaExcecaoCasoQuantidadeDeAdicoesMaiorQueCinco() throws Exception {
+    private void lancaExcecaoCasoQuantidadeDeAdicoesMaiorQueCinco() throws RuntimeException {
         if(quantasVezesHouveAdicaoDeProduto > 5) {
-            throw new Exception("Cuidado! Mais que 5 adições.");
+            throw new RuntimeException("Cuidado! Mais que 5 adições.");
         }
     }
 }
