@@ -1,8 +1,14 @@
+import org.apache.commons.lang3.RandomStringUtils;
+
+import java.util.Random;
+
 public class ProdutoBuilder {
         public static Produto criar() {
-                return new Produto("Dolly Guaraná",
-                        3.50,
-                        "Bebida gaseificada aromatizada artificialmente com sabor de guaraná",
-                        new QualquerCoisa("Qualquer Coisa", "Descrição de qualquer coisa"));
+                boolean useLetters = true;
+                boolean useNumbers = false;
+                String descricao = RandomStringUtils.random(10, useLetters, useNumbers);
+                String nome = RandomStringUtils.random(5, useLetters, useNumbers);
+                float generatedFloat = 1F + new Random().nextFloat() * (10F - 1F);
+                return new Produto(nome, (double) generatedFloat, descricao, new QualquerCoisa(nome, descricao));
         }
 }

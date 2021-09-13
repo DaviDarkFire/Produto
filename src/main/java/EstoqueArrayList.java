@@ -19,11 +19,15 @@ public class EstoqueArrayList implements Estoque {
 
     @Override
     public void daBaixaDeProdutoEmEstoque(Produto produto) throws RuntimeException {
-
+        produtosEmEstoque.remove(produto);
     }
 
     @Override
     public void adicionaProdutoEmEstoque(Produto produto) throws RuntimeException {
+        produtosEmEstoque.add(produto);
+    }
 
+    public int buscarProduto(Produto produto) {
+        return produtosEmEstoque.indexOf(produto);
     }
 }
